@@ -1,0 +1,40 @@
+{% comment %}
+  Shopify Wishlist
+  Usage:
+    - Markup: {%- render 'button-wishlist', product: product -%}
+    - Place this snippet inside your existing product card snippet
+
+  Parameters:
+    - product: <Shopify product> (required)
+{% endcomment %}
+{%- if product.handle != blank -%}
+  <button type="button" aria-label="Add to wishlist" class="wishlist-btn" button-wishlist data-product-handle="{{ product.handle }}">
+    <style>
+      .icon {
+        fill: transparent;
+        stroke: #000000;
+        transition: fill 0.3s ease;
+        height: 30px;
+      }
+
+      .wishlist-btn{
+        background-color: transparent;
+        border: none;
+      }
+
+      .wishlist-btn:hover{
+        cursor: pointer;
+      }
+
+      .icon.active {
+      fill: red;
+      stroke: red;
+      }
+    </style>
+    {%- render 'icon-heart' class:wishlist-heart -%}
+  </button>
+{%- endif -%}
+
+{%- comment -%}
+The products exist in local storage as a string separated by commas, I can easily pull that into the wishlist page and make use of it to populate the page using alpine
+{%- endcomment -%}

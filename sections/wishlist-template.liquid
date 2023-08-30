@@ -1,0 +1,154 @@
+{% comment %}
+Shopify Wishlist
+Usage:
+- Create a new page in the Shopify admin
+- Admin > Online store > Pages > Add page
+- Set the new page's template to: 'page.wishlist'
+- Do NOT remove the `grid-wishlist` attribute
+
+Notes:
+- The grid will be populated with product cards using Javascript
+- Any content inside of the `[grid-wishlist]` element will be completely replaced by the product cards
+
+Tip:
+- Place a loading element inside the `[grid-wishlist]` element and it will automatically be removed once the product
+cards have loaded
+- Add any liquid code before/after the grid element
+{% endcomment %}
+<div style = "background-color: #dcdfed; text-align: center; padding: 100px 0" class = "h1 wishlist-hero">Your Wishlist</div>
+<div style = "padding: 60px 0; margin: auto;" class="wishlist__grid page-width container" x-data = "items" :class = "{'flex grid grid--4-col-desktop grid--1-col-tablet-down': items.length > 1}">
+  {% comment %} Sample loading element {% endcomment %}
+  <!--One product card-->
+    <div id = "no-list-cta" style = "padding: 60px 40px; flex-direction: column;" x-show = "items.length < 1" :class = "{'flex': items.length < 1}">
+      <p class = "h2">You don't have any products in your wishlist yet</p>
+      <button style = "max-width: 210px;" class = "button" @click = "() => window.location.href = `${shopUrl}/collections/all`">Shop All Products</button>
+    </div>
+    <template x-for = "item in items">
+      <div style = "max-width: 268px;" class="grid__item">
+          <a x-bind:href = "item.url">
+            <div style = "display: flex; justify-content: center; border: 1px solid; padding: 1.5rem 0.5rem; border-radius: 5%;" class="card-wrapper product-card-wrapper">
+              <div class="card card--card card--media color-background-1">
+                <a x-bind:href = "item.url">
+                  <div class="card__inner ratio">
+                    <div class="card__media">
+                      <div class="media--hover-effect media--transparent">
+                        <img style = "object-fit: cover; width:100%; max-width: 200px; height: 300px;" x-bind:src="item.featured_image" />
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <div class="card__content">
+                  <div class="card__information">
+                    <h3 class="card__heading h5">
+                      <a class = "full-unstyled-link" x-bind:href="item.url" x-text="item.title"></a>
+                    </h3>
+                    <div class="card-information">
+                      <span class="caption-large light"></span>
+                      <div class="price price--on-sale">
+                        <div class="price__container">
+                          <div class="price__regular">
+                            <span class="visually-hidden visually-hidden--inline"
+                              >Regular price</span
+                            >
+                            <span class="price-item price-item--regular"> $42.99 </span>
+                          </div>
+                          <div class="price__sale">
+                            <span class="visually-hidden visually-hidden--inline"
+                              >Regular price</span
+                            >
+                            <span>
+                              <s class="price-item price-item--regular">
+                                $44.99
+                              </s> </span
+                            ><span class="visually-hidden visually-hidden--inline"
+                              >Sale price</span
+                            >
+                            <span class="price-item price-item--sale price-item--last">
+                              $42.99
+                            </span>
+                          </div>
+                          <small class="unit-price caption hidden">
+                            <span class="visually-hidden">Unit price</span>
+                            <span class="price-item price-item--last">
+                              <span></span>
+                              <span aria-hidden="true">/</span>
+                              <span class="visually-hidden">&nbsp;per&nbsp;</span>
+                              <span> </span>
+                            </span>
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Add to Cart Button -->
+                  <div class="quick-add">
+                    <button style = "margin-top: 1.5rem;" class = "button button--secondary quick-add__submit button--full-width" @click="addToCart(item)">
+                      <span style = "color: #0e1b4d;">Add to cart</span>
+                    </button>
+                    <a type="button" aria-label="Add to wishlist" href = "javascript:;" style = "margin-top: 1.5rem; text-transform: capitalize;" class = "full-unstyled-link wishlist-btn" x-bind:data-product-handle="item.handle" @click = "(event) => removeFromWishlist(item.handle, event)">Remove From Wishlist</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+      </div>      
+    </template>
+</div>
+
+
+<script>
+  document.addEventListener('alpine:init', () => {
+      Alpine.data('items', () => ({
+        init(){
+          let data = []
+          const productHandleRequest = (productHandle) => {
+            return fetch(`${window.shopUrl}/products/${productHandle}.js`).then(res => res.json())
+          }
+
+          if(window.localStorage["shopify-wishlist"]){
+            this.wishlist = getWishlist()
+            const requests = this.wishlist.map(handle => {
+              return productHandleRequest(handle)
+            });
+
+            const responses = Promise.allSettled(requests)
+            responses.then(data => {
+              data.map(obj => obj.value).forEach(obj => this.items.push(obj))
+            })
+            
+          }
+        },
+        items: [],
+        wishlist: [],
+        addToCart(item){
+          let formData = {
+            'items': [{
+              'id': item.variants[0].id,
+              'quantity': 1
+              }]
+            };
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(response => {
+            return response.json();
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+
+          window.location.href = `${shopUrl}/cart`
+        }
+      }))
+  })
+</script>
+
+{% schema %}
+{
+"templates": ["page"]
+}
+{% endschema %}
