@@ -270,6 +270,18 @@
     ]
   },
   {
+    "name": "Minimum Free Shipping",
+    "settings":
+    [
+      {
+        "type": "number",
+        "id": "minimum_free_shipping",
+        "label": "Minimum Free Shipping",
+        "default": 20000
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.variant_pills.name",
     "settings": [
       {
@@ -283,7 +295,7 @@
       {
         "type": "range",
         "id": "variant_pills_border_thickness",
-        "min": 0,
+        "min": 0, 
         "max": 12,
         "step": 1,
         "unit": "px",
