@@ -124,6 +124,25 @@
     button.addEventListener('click', function(event){
         event.preventDefault()
 
+        fetch('cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(items)
+        })
+        .then(response => {
+          return response.json();
+          console.log("product successfully added to cart");
+        
+        }).then((state) => {
+
+          console.log("Current State: " + state)
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
     });
   })
 </script>
