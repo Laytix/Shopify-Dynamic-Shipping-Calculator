@@ -2,7 +2,7 @@
 {{ 'splide-core.min.css' | asset_url | stylesheet_tag }}
 {{ 'splide.min.css' | asset_url | stylesheet_tag }}
 
-<div class="upsell-card">
+<form class="upsell-card" action="{{ routes.cart_url }}"  method="post">
   <div id="image-slider" class="splide">
     <div class="splide__track">
       <ul class="splide__list">
@@ -23,7 +23,7 @@
                   <span class="upsell-price">{{ item.price | money }}</span>
                 </div>
                 <div class="upsell-product-info-button">
-                  <button>Add to cart</button>
+                  <button class="upsell-product-button">Add to cart</button>
                 </div>
                 
               </div>
@@ -33,7 +33,7 @@
       </ul>
     </div>
   </div>
-</div>
+</form>
 
 <style>
   .splide__slide img {
@@ -117,6 +117,15 @@
   document.addEventListener('DOMContentLoaded', function() {
     new Splide('#image-slider').mount();
   });
+
+  let upsell_buttons = document.querySelectorAll('.upsell-product-button')
+
+  upsell_buttons.forEach(button =>{
+    button.addEventListener('click', function(event){
+        event.preventDefault()
+
+    });
+  })
 </script>
 
 {% comment %} Image aspect
