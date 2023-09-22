@@ -292,6 +292,9 @@
           </div>
         </details>
       </header-drawer>
+      {% capture order = current_order %}
+        <p>Order number: {{ order.order_number }}</p>
+      {% endcapture %}
     {%- endif -%}
 
     {%- if section.settings.logo_position == 'top-center' or section.settings.menu == blank -%}
@@ -634,7 +637,9 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 {%- endif -%}
 
+
 {% javascript %}
+  console.log( { shop });
   class StickyHeader extends HTMLElement {
     constructor() {
       super();

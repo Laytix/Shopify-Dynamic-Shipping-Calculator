@@ -1520,5 +1520,16 @@
         "info": "t:settings_schema.cart.settings.cart_drawer.collection.info"
       }
     ]
+  },
+  {
+    "name": "Upsell Suggestions",
+    "settings":[
+      {
+        "type": "collection",
+        "id": "upsell_collection",
+        "label": "Upsell collection"
+      }
+      
+    ]
   }
 ]

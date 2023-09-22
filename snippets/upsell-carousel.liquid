@@ -1,0 +1,125 @@
+<script src="{{ 'splide.min.js' | asset_url }}" defer="defer"></script>
+{{ 'splide-core.min.css' | asset_url | stylesheet_tag }}
+{{ 'splide.min.css' | asset_url | stylesheet_tag }}
+
+<div class="upsell-card">
+  <div id="image-slider" class="splide">
+    <div class="splide__track">
+      <ul class="splide__list">
+        {% for item in settings.upsell_collection.products limit: 3 %}
+          <li class="splide__slide">
+            <div class="upsell-product">
+              <div class="upsell-product-image">
+                <img
+                  loading="lazy"
+                  src="{{ item.images[0] | image_url }}"
+                  alt=""
+                  height="{{ item.featured_image.height }}"
+                  width="{{ item.featured_img.width }}">
+              </div>
+              <div class="upsell-product-info">
+                <div class="upsell-product-info-details">
+                  <span class="upsell-title">{{ item.title }}</span>
+                  <span class="upsell-price">{{ item.price | money }}</span>
+                </div>
+                <div class="upsell-product-info-button">
+                  <button>Add to cart</button>
+                </div>
+                
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .splide__slide img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .splide__slide{
+    background-color: whitesmoke;
+  }
+  .upsell-product {
+    display: flex;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+
+  }
+  .upsell-product-image {
+    overflow: hidden;
+    width: 50%;
+
+  }
+
+  .upsell-product-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 5px;
+  }
+
+  .upsell-product-info-details{
+    height: 65%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+
+  }
+
+  .upsell-title{
+    font-size: medium;
+    font-weight: 600;
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+  }
+
+  .upsell-price{
+    font-size: smaller;
+
+  }
+
+  .upsell-product-info-button{
+    height: 35%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 35%;
+  }
+
+  .upsell-product-info-button button{
+    height: 80%;
+    width: 80%;
+    background-color: #383838;
+    border-radius: 7px;
+    color: white;
+    font-size: medium;
+    border: none;
+    cursor: pointer;
+  }
+
+  .splide__list {
+    height: 160px;
+
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    new Splide('#image-slider').mount();
+  });
+</script>
+
+{% comment %} Image aspect
+Cart refreshing causing carousel to disappear
+Updating the upsell announcement bar price
+Cart refreshing affecting bar animations {% endcomment %}

@@ -250,10 +250,15 @@
             <p id="CartDrawer-LineItemStatus" class="visually-hidden" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
           </div>
           <div id="CartDrawer-CartErrors" role="alert"></div>
+          <div class="drawer__footer">
+
         </form>
+            
+
       </cart-drawer-items>
-      {% render 'upsell-carousel' %}
-      <div class="drawer__footer">
+      {% if settings.upsell_collection != blank %}
+        {% render 'upsell-carousel' %}
+      {% endif %}
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
