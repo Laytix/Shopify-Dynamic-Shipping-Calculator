@@ -97,91 +97,93 @@
 {%- endfor -%}
 
 
-<script>/* async function getPrice() {
-  const request = await fetch("/cart.js")
-  const result = await request.json()
-  
-  const price = document.querySelector(".total-price-announcment-bar")
-  price.textContent = result["total_price"]
-  
+<script>
+  async function getPrice() {
+    const request = await fetch("/cart.js")
+    const result = await request.json()
+
+    const price = document.querySelector(".total-price-announcment-bar")
+    price.textContent = result["total_price"]
+
   }
-  
-  window.addEventListener("load", getPrice) */
-</script>{% schema %}
-{
-  "name": "t:sections.announcement-bar.name",
-  "max_blocks": 12,
-  "blocks": [
-    {
-      "type": "announcement",
-      "name": "t:sections.announcement-bar.blocks.announcement.name",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "default": "Welcome to our store",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
-        }, {
-          "type": "select",
-          "id": "text_alignment",
-          "options": [
-            {
-              "value": "left",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__1.label"
-            }, {
-              "value": "center",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__2.label"
-            }, {
-              "value": "right",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__3.label"
-            }
-          ],
-          "default": "center",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.label"
-        }, {
-          "type": "select",
-          "id": "color_scheme",
-          "options": [
-            {
-              "value": "accent-1",
-              "label": "t:sections.all.colors.accent_1.label"
-            },
-            {
-              "value": "accent-2",
-              "label": "t:sections.all.colors.accent_2.label"
-            },
-            {
-              "value": "background-1",
-              "label": "t:sections.all.colors.background_1.label"
-            },
-            {
-              "value": "background-2",
-              "label": "t:sections.all.colors.background_2.label"
-            }, {
-              "value": "inverse",
-              "label": "t:sections.all.colors.inverse.label"
-            }
-          ],
-          "default": "accent-1",
-          "label": "t:sections.all.colors.label"
-        }, {
-          "type": "url",
-          "id": "link",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
-        }
-      ]
-    }, {
-      "type": "upsell",
-      "name": "Upsell Free Shipping Bar",
-      "settings": []
-    }
-  ],
-  "default": {
+
+  window.addEventListener("load", getPrice)
+</script>
+{% schema %}
+  {
+    "name": "t:sections.announcement-bar.name",
+    "max_blocks": 12,
     "blocks": [
       {
-        "type": "upsell"
+        "type": "announcement",
+        "name": "t:sections.announcement-bar.blocks.announcement.name",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "default": "Welcome to our store",
+            "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+          }, {
+            "type": "select",
+            "id": "text_alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__1.label"
+              }, {
+                "value": "center",
+                "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__2.label"
+              }, {
+                "value": "right",
+                "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__3.label"
+              }
+            ],
+            "default": "center",
+            "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.label"
+          }, {
+            "type": "select",
+            "id": "color_scheme",
+            "options": [
+              {
+                "value": "accent-1",
+                "label": "t:sections.all.colors.accent_1.label"
+              },
+              {
+                "value": "accent-2",
+                "label": "t:sections.all.colors.accent_2.label"
+              },
+              {
+                "value": "background-1",
+                "label": "t:sections.all.colors.background_1.label"
+              },
+              {
+                "value": "background-2",
+                "label": "t:sections.all.colors.background_2.label"
+              }, {
+                "value": "inverse",
+                "label": "t:sections.all.colors.inverse.label"
+              }
+            ],
+            "default": "accent-1",
+            "label": "t:sections.all.colors.label"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+          }
+        ]
+      }, {
+        "type": "upsell",
+        "name": "Upsell Free Shipping Bar",
+        "settings": []
       }
-    ]
+    ],
+    "default": {
+      "blocks": [
+        {
+          "type": "upsell"
+        }
+      ]
+    }
   }
-}
 {% endschema %}
