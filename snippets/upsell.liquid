@@ -1,5 +1,5 @@
 <div class="upsell-container">
-  {% assign shipping_value = settings.minimum_free_shipping %}
+  {% assign shipping_value = settings.minimum_free_shipping | times: 100 %}
   {% assign cart_total = cart.total_price %}
   {% assign shipping_value_left = shipping_value | minus: cart_total %}
   {% assign shipping_percentage_fraction = cart_total | times: 100 | divided_by: shipping_value %}
