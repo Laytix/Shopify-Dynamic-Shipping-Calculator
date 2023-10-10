@@ -48,7 +48,7 @@
       <div class="drawer__header">
         <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
         <button class="drawer__close" type="button" onclick="this.closest('cart-drawer').close()" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
-        {% render 'upsell' %}
+        {% render 'shipping-tracker' %} 
       </div>
       
       <cart-drawer-items {% if cart == empty %}class=" is-empty"{% endif %}>
@@ -256,9 +256,6 @@
             
    
       </cart-drawer-items>
-      {% if settings.upsell_collection != blank %}
-        {% render 'upsell-carousel' %}
-      {% endif %}  
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
@@ -327,6 +324,7 @@
     </div>
   </div>
 </cart-drawer>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
