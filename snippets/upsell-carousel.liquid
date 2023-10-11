@@ -2,13 +2,14 @@
 {{ 'splide-core.min.css' | asset_url | stylesheet_tag }}
 {{ 'splide.min.css' | asset_url | stylesheet_tag }}
 
-<form class="upsell-card" action="{{ routes.cart_url }}"  method="post">
+<div class="upsell-card">
   <div id="image-slider" class="splide">
     <div class="splide__track">
       <ul class="splide__list">
         {% for item in settings.upsell_collection.products limit: 3 %}
+          {% assign product_item = item.variants[0].id %}
           <li class="splide__slide">
-            <div class="upsell-product">
+            <form class="upsell-product" action="{{ routes.cart_url }}"  method="post">
               <div class="upsell-product-image">
                 <img
                   loading="lazy"
@@ -23,17 +24,17 @@
                   <span class="upsell-price">{{ item.price | money }}</span>
                 </div>
                 <div class="upsell-product-info-button">
-                  <button class="upsell-product-button">Add to cart</button>
+                  <button type="submit" onclick="event.preventDefault(); addToCart({{ product_item }})" class="upsell-product-button">Add to cart</button>
                 </div>
                 
               </div>
-            </div>
+            </form>
           </li>
         {% endfor %}
       </ul>
     </div>
   </div>
-</form>
+</div>
 
 <style>
   .splide__slide img {
@@ -114,37 +115,43 @@
 </style>
 
 <script>
+  function addToCart(itemid){
+    let formData = {
+      'items': [{
+        'id': itemid,
+        'quantity': 1
+        }]
+      };
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+    // window.location.href = `${shopUrl}/cart`
+  }
   document.addEventListener('DOMContentLoaded', function() {
     new Splide('#image-slider').mount();
   });
 
-  let upsell_buttons = document.querySelectorAll('.upsell-product-button')
+  const upsellforms = document.querySelectorAll(".upsell-product")
 
-  upsell_buttons.forEach(button =>{
-    button.addEventListener('click', function(event){
-        event.preventDefault()
+  // upsellforms.forEach((form) =>{
+  //   form.addEventListener("submit", async (event) => {
+  //     event.preventDefault();
+  //     // addToCart({{ item }})
+      
 
-        fetch('cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(items)
-        })
-        .then(response => {
-          return response.json();
-          console.log("product successfully added to cart");
-        
-        }).then((state) => {
-
-          console.log("Current State: " + state)
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-
-    });
-  })
+  //   })
+  // })
 </script>
 
 {% comment %} Image aspect
