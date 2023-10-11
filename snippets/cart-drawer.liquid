@@ -253,7 +253,12 @@
           <div class="drawer__footer">
 
         </form>
-            
+        {% if settings.upsell_collection.products %}
+          <div id="upsell-carousel">
+            <h2>Recommeded Products</h2>
+            {% render "upsell-carousel" %}
+          </div>
+        {% endif %}
    
       </cart-drawer-items>
         {%- if settings.show_cart_note -%}
@@ -321,8 +326,10 @@
           </button>
         </div>
       </div>
+
     </div>
   </div>
+
 </cart-drawer>
 
 
