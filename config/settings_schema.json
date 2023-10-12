@@ -1525,9 +1525,10 @@
     "name": "Upsell Suggestions",
     "settings":[
       {
-        "type": "collection",
+        "type": "product_list",
         "id": "upsell_collection",
-        "label": "Upsell collection"
+        "label": "Upsell collection",
+        "limit": 3
       }
       
     ]
