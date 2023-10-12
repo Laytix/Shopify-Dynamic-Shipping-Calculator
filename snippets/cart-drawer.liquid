@@ -11,6 +11,15 @@
   .drawer {
     visibility: hidden;
   }
+
+  #upsell-carousel{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #upsell-carousel h2{
+    text-align: center;
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -253,12 +262,7 @@
           <div class="drawer__footer">
 
         </form>
-        {% if settings.upsell_collection.products %}
-          <div id="upsell-carousel">
-            <h2>Recommeded Products</h2>
-            {% render "upsell-carousel" %}
-          </div>
-        {% endif %}
+            
    
       </cart-drawer-items>
         {%- if settings.show_cart_note -%}
@@ -326,11 +330,18 @@
           </button>
         </div>
       </div>
+      {% if settings.upsell_collection.products %}
+        <div id="upsell-carousel">
+          <h2>Recommeded Products</h2>
+          {% render "upsell-carousel" %}
+        </div>
+      {% endif %}
 
     </div>
   </div>
 
 </cart-drawer>
+
 
 
 <script>
