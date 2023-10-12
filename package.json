@@ -1,0 +1,23 @@
+{
+  "name": "apples-wishlist-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Laytix/Shopify-Dynamic-Shipping-Calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Laytix/Shopify-Dynamic-Shipping-Calculator/issues"
+  },
+  "homepage": "https://github.com/Laytix/Shopify-Dynamic-Shipping-Calculator#readme",
+  "dependencies": {
+    "keen-slider": "^6.8.6"
+  }
+}
