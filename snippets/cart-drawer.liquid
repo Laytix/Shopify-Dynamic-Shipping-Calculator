@@ -330,13 +330,12 @@
           </button>
         </div>
       </div>
-      {% if settings.upsell_collection.products %}
+      {% if settings.upsell_collection.count != 0 %}
         <div id="upsell-carousel">
           <h2>Recommeded Products</h2>
           {% render "upsell-carousel" %}
         </div>
       {% endif %}
-
     </div>
   </div>
 
